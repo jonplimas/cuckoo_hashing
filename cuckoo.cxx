@@ -1,9 +1,9 @@
 // Assignment 3: Cuckoo Hashing algorithm
 // Doina Bein
 // An open addressing method called Cuckoo Hashing
-// INPUT: an input file containing strings of maximum 255 characters, 
+// INPUT: an input file containing strings of maximum 255 characters,
 // one string per line
-// OUTPUT: a detailed list of where the strings are inserted.     
+// OUTPUT: a detailed list of where the strings are inserted.
 
 #include <iostream>
 #include <cstring>
@@ -12,9 +12,9 @@
 
 using namespace std;
 
-// cuckoo tables' size                                                        
+// cuckoo tables' size
 const int tablesize = 17;
-// combine the two 1-dimensional table into one 2-dimensional table           
+// combine the two 1-dimensional table into one 2-dimensional table
 string  t[tablesize][2];
 
 // define the prime number used in calculating the hash values
@@ -44,7 +44,7 @@ int main() {
    // display the header
   cout << endl << "CPSC 335.01 - Programming Assignment #3: ";
   cout << "Cuckoo Hashing algorithm" << endl;
-    
+
   // read the strings from a file
   cout << "Input the file name (no spaces)!" << endl;
   cin >> filename;
@@ -70,20 +70,20 @@ int main() {
 
 
 bool place_in_hash_tables (string s) {
-  
+
   bool placed;
   size_t pos;
   int index;
   string temp_s, temp;
-  
+
   temp_s = s;
 
   // use a counter to detect loops; if counter >= 2*tablesize, then loop
   int counter = 0;
-  
+
   // start with table T1
   index = 0;
-  
+
   placed = false;
 
   pos = f(temp_s, index);
@@ -97,8 +97,8 @@ bool place_in_hash_tables (string s) {
       return placed;
     }
     else {
-      // entry at index <pos> in the <index> hash table is not available 
-      // so obtain the string stored over there in variable <temp> and place 
+      // entry at index <pos> in the <index> hash table is not available
+      // so obtain the string stored over there in variable <temp> and place
       // the string <temp_s> there
       // now the string <temp> needs to be placed in the other table
       cout << "String <" << temp_s << "> will be placed at" << " t[" << pos;
@@ -106,13 +106,19 @@ bool place_in_hash_tables (string s) {
       cout << endl;
       // YOU NEED TO WRITE THE CODE TO STORE IN temp THE STRING STORED AT
       // t[pos][index] AND STORE IN t[pos][index] THE STRING temp_s
+      temp = t[pos][index];
+      temp_s = t[pos][index];
 
-      // NOW temp_s CONTAINING THE EVICTED STRING NEEDS TO BE STORED 
+      // NOW temp_s CONTAINING THE EVICTED STRING NEEDS TO BE STORED
       // IN THE OTHER TABLE
-
       // WRITE THE CODE TO SET index TO INDICATE THE OTHER TABLE
-
+      if(index == 0){
+        index = 1;
+      } else {
+        index = 0;
+      }
       // WRITE THE CODE TO CALCULATE IN pos THE HASH VALUE FOR temp_s
+      pos = f(temp_s, index);
 
       counter ++;
     }
@@ -121,7 +127,7 @@ bool place_in_hash_tables (string s) {
 };
 
 
-// oompute the hash functions
+// compute the hash functions
 // TO DO: complete the ELSE brach
 size_t f(string s, size_t index) {
   size_t po, len;
@@ -133,30 +139,53 @@ size_t f(string s, size_t index) {
   if (index == 0) {
     val = s[0];
     val = val % tablesize;
-    if (val < 0) val += tablesize;
+    if (val < 0)
+      val += tablesize;
 
-    if (len == 1) 
+    if (len == 1)
       return val;
-    
-    for (i = 1; i < len; i++) 
+
+    for (i = 1; i < len; i++)
     {
       temp = s[i];
       po *= prime;
 
       po = po % tablesize;
-      if (po < 0) po += tablesize;
-      
+      if (po < 0)
+        po += tablesize;
+
       val += temp * po;
       val = val % tablesize;
 
-      if (val < 0) val += tablesize;
-    }    
+      if (val < 0)
+        val += tablesize;
+    }
     return val;
 }
   else {
-    // TO DO: YOU NEED TO IMPLEMENT THE STEPS TO CALCULATE THE SECOND 
+    // TO DO: YOU NEED TO IMPLEMENT THE STEPS TO CALCULATE THE SECOND
     // HASH FUNCTION in <val>
+    val = s[len-1];
+    val = val % tablesize;
+    if(val < 0) val += tablesize;
 
+    if(len == 1)
+      return val;
+
+    for(int i = 1; i < len; i++){
+      temp = s[len-i-1];
+      po *= prime;
+
+      po = po % tablesize;
+      if(po < 0)
+        po += tablesize;
+
+      val += temp * po;
+      val = val % tablesize;
+
+      if(val < 0)
+        val += tablesize;
+    }
     return val;
  }
 }
