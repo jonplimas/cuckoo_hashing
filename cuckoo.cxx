@@ -104,10 +104,12 @@ bool place_in_hash_tables (string s) {
       cout << "String <" << temp_s << "> will be placed at" << " t[" << pos;
       cout <<"][" << index << "]" << " replacing <" << t[pos][index] << ">";
       cout << endl;
+      
       // YOU NEED TO WRITE THE CODE TO STORE IN temp THE STRING STORED AT
       // t[pos][index] AND STORE IN t[pos][index] THE STRING temp_s
       temp = t[pos][index];
-      temp_s = t[pos][index];
+      t[pos][index] = temp_s;
+      temp_s = temp;
 
       // NOW temp_s CONTAINING THE EVICTED STRING NEEDS TO BE STORED
       // IN THE OTHER TABLE
@@ -125,7 +127,6 @@ bool place_in_hash_tables (string s) {
   }
   return placed;
 };
-
 
 // compute the hash functions
 // TO DO: complete the ELSE brach
