@@ -1,5 +1,6 @@
 Cuckoo Hashing with 41
-description: collision handling using a hashing algorithm. 
+description: collision handling using a cuckoo hashing algorithm.
+Time Complexity: O(1) worst-case
 
 
 note: Compile and Run using C++17
