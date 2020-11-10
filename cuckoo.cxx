@@ -1,7 +1,7 @@
 // Assignment 3: Cuckoo Hashing algorithm
 // Doina Bein
 // An open addressing method called Cuckoo Hashing
-// INPUT: an input file containing strings of maximum 255 characters,
+// INPUT: an input file containing strings of maximum length of 255 characters,
 // one string per line
 // OUTPUT: a detailed list of where the strings are inserted.
 
@@ -14,6 +14,7 @@ using namespace std;
 
 // cuckoo tables' size
 const int tablesize = 17;
+
 // combine the two 1-dimensional table into one 2-dimensional table
 string  t[tablesize][2];
 
@@ -26,8 +27,9 @@ size_t f(string, size_t);
 // place a string in one of the hash tables
 bool place_in_hash_tables (string);
 
-int main() {
 
+
+int main() {
   // the strings to be stored in the hash tables
   string s;
   size_t i, len;
@@ -39,10 +41,11 @@ int main() {
       t[i][1] = "";
   }
 
+  // set char limit for string input
   char filename[255] = "";
 
    // display the header
-  cout << endl << "CPSC 335.01 - Programming Assignment #3: ";
+  cout << endl << "CPSC 335.01 - Algorithms: ";
   cout << "Cuckoo Hashing algorithm" << endl;
 
   // read the strings from a file
@@ -58,6 +61,7 @@ int main() {
     s[len-1]='\0'; // you may need to change this line to s[len-1]='\0'
     // insert the string in the cuckoo table
     placed = place_in_hash_tables(s);
+    
     // check whether the placement was successful
     if (!placed) {
       cout << "Placement has failed" << endl;
@@ -104,8 +108,8 @@ bool place_in_hash_tables (string s) {
       cout << "String <" << temp_s << "> will be placed at" << " t[" << pos;
       cout <<"][" << index << "]" << " replacing <" << t[pos][index] << ">";
       cout << endl;
-      
-      // YOU NEED TO WRITE THE CODE TO STORE IN temp THE STRING STORED AT
+
+      // STORE IN temp THE STRING STORED AT
       // t[pos][index] AND STORE IN t[pos][index] THE STRING temp_s
       temp = t[pos][index];
       t[pos][index] = temp_s;
@@ -113,13 +117,13 @@ bool place_in_hash_tables (string s) {
 
       // NOW temp_s CONTAINING THE EVICTED STRING NEEDS TO BE STORED
       // IN THE OTHER TABLE
-      // WRITE THE CODE TO SET index TO INDICATE THE OTHER TABLE
+      // SET index TO INDICATE THE OTHER TABLE
       if(index == 0){
         index = 1;
       } else {
         index = 0;
       }
-      // WRITE THE CODE TO CALCULATE IN pos THE HASH VALUE FOR temp_s
+      // CALCULATE IN pos THE HASH VALUE FOR temp_s
       pos = f(temp_s, index);
 
       counter ++;
@@ -129,7 +133,6 @@ bool place_in_hash_tables (string s) {
 };
 
 // compute the hash functions
-// TO DO: complete the ELSE brach
 size_t f(string s, size_t index) {
   size_t po, len;
   int i, val=0, temp;
@@ -164,7 +167,7 @@ size_t f(string s, size_t index) {
     return val;
 }
   else {
-    // TO DO: YOU NEED TO IMPLEMENT THE STEPS TO CALCULATE THE SECOND
+    // STEPS TO CALCULATE THE SECOND
     // HASH FUNCTION in <val>
     val = s[len-1];
     val = val % tablesize;
