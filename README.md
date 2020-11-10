@@ -13,4 +13,4 @@ g++ -std=c++17 -o hasher cuckoo.cxx
 ./hasher
 
 
-SEE "in6 Final Positions" -- for a documented example of Hashing Table results  
+SEE "in6 Final Positions" -- for an example of Hashing Table results  
