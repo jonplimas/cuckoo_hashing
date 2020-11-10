@@ -1,5 +1,5 @@
 Cuckoo Hashing with 41
-description: collision handling using a hashing algorithm
+description: collision handling using a hashing algorithm. 
 
 
 note: Compile and Run using C++17
